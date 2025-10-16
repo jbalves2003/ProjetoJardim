@@ -6,7 +6,7 @@
 
 #ifndef SIMULADOR_H
 #define SIMULADOR_H
-
+#include <string>
 #include "../include/Simulador.h"
 #include "../include/Jardim.h"
 class Simulador {

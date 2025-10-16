@@ -8,7 +8,6 @@
 #include <vector>
 #include "PosicaoSolo.h"
 
-// Forward declarations
 class Jardineiro;
 class Planta;
 class Ferramenta;

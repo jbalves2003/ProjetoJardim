@@ -1,7 +1,8 @@
 #include "../include/PosicaoSolo.h"
-#include <iostream> // Apenas para fins de debug, pode remover
-#include <algorithm> // Para std::max/min
-
+#include <algorithm>
+#include <chrono>
+#include <random>
+#include "../include/Settings.h"
 PosicaoSolo::PosicaoSolo() {
     static std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
