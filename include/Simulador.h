@@ -11,17 +11,12 @@
 #include "../include/Jardim.h"
 class Simulador {
 public:
-    // Construtor: inicializa o simulador.
     Simulador();
-
-    // Inicia o ciclo principal do simulador.
     void run();
 
 private:
     Jardim jardim;
     bool aExecutar;
-
-    // Processa uma única linha de comando.
     void processarLinhaComando(const std::string& linha);
 };
 

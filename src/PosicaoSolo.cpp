@@ -1,5 +1,4 @@
 #include "../include/PosicaoSolo.h"
-#include <algorithm>
 #include <chrono>
 #include <random>
 #include "../include/Settings.h"

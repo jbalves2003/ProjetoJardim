@@ -10,8 +10,8 @@
 Simulador::Simulador() : aExecutar(true) {}
 
 void Simulador::run() {
-    std::cout << "Bem-vindo ao Simulador de Jardim!" << std::endl;
-    std::cout << "Para comecar, crie um jardim: jardim <linhas> <colunas>" << std::endl;
+    std::cout << "Simulador de Jardim!" << std::endl;
+    std::cout << "jardim: jardim <linhas> <colunas>" << std::endl;
 
     std::string linhaComando;
     while (aExecutar) {
@@ -33,7 +33,7 @@ void Simulador::processarLinhaComando(const std::string& linha) {
     std::string comando;
     iss >> comando;
 
-    // Comandos que podem ser executados antes da criação do jardim
+
     if (comando == "fim") {
         std::cout << "Encerrando o simulador." << std::endl;
         aExecutar = false;
@@ -63,17 +63,16 @@ void Simulador::processarLinhaComando(const std::string& linha) {
         return;
     }
 
-    // A partir daqui, todos os comandos exigem que o jardim exista
+    // todos os comandos a partir da cricao do jardim
     if (!jardim.isJardimCriado()) {
         std::cout << "Erro: O jardim ainda nao foi criado. Execute o comando 'jardim' primeiro." << std::endl;
         return;
     }
 
-    // -- Validação dos restantes comandos --
 
     if (comando == "avanca") {
         int n = 1;
-        iss >> n; // Tenta ler um número; se falhar, n continua a ser 1
+        iss >> n;
         if (n > 0) {
             std::cout << "Comando 'avanca' validado para " << n << " instante(s)." << std::endl;
         } else {
