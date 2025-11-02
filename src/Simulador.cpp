@@ -33,7 +33,6 @@ void Simulador::processarLinhaComando(const std::string& linha) {
     std::string comando;
     iss >> comando;
 
-
     if (comando == "fim") {
         std::cout << "Encerrando o simulador." << std::endl;
         aExecutar = false;
@@ -47,7 +46,7 @@ void Simulador::processarLinhaComando(const std::string& linha) {
                 jardim.exibirJardim();
             }
         } else {
-            std::cout << "Erro: jardim <linhas> <colunas>" << std::endl;
+            std::cout << "Erro: Sintaxe. Uso: jardim <linhas> <colunas>" << std::endl;
         }
         return;
     }
@@ -56,16 +55,16 @@ void Simulador::processarLinhaComando(const std::string& linha) {
         std::string nomeFicheiro;
         iss >> nomeFicheiro;
         if (!nomeFicheiro.empty()) {
-             std::cout << "Comando 'executa' validado  '" << nomeFicheiro << "'." << std::endl;
+             std::cout << "Comando 'executa' validado para o ficheiro '" << nomeFicheiro << "'." << std::endl;
         } else {
-            std::cout << "Erro: Sintaxe. Uso: executa nome-ficheiro" << std::endl;
+            std::cout << "Erro: Sintaxe. Uso: executa <nome-ficheiro>" << std::endl;
         }
         return;
     }
 
     // todos os comandos a partir da cricao do jardim
     if (!jardim.isJardimCriado()) {
-        std::cout << "Erro: O jardim ainda nao foi criado. Execute o comando jardim primeiro." << std::endl;
+        std::cout << "Erro: O jardim ainda nao foi criado. Execute o comando 'jardim' primeiro." << std::endl;
         return;
     }
 
@@ -75,6 +74,7 @@ void Simulador::processarLinhaComando(const std::string& linha) {
         iss >> n;
         if (n > 0) {
             std::cout << "Comando 'avanca' validado para " << n << " instante(s)." << std::endl;
+            jardim.resetaPlantasPorInstante();
         } else {
             std::cout << "Erro: O numero de instantes deve ser positivo." << std::endl;
         }
@@ -90,9 +90,15 @@ void Simulador::processarLinhaComando(const std::string& linha) {
             std::cout << "Erro: Sintaxe. Uso: " << comando << " <l><c>" << std::endl;
         }
     } else if (comando == "planta") {
+        if (!jardim.podePlantar()) {
+            std::cout << "Erro: Nao e permitido plantar mais de 2 plantas no mesmo instante." << std::endl;
+            return;
+        }
+
         std::string coords, tipoStr;
         if (iss >> coords >> tipoStr && coords.length() == 2 && tipoStr.length() == 1) {
             std::cout << "Comando 'planta' validado para " << coords << " com tipo '" << tipoStr[0] << "'." << std::endl;
+            jardim.incrementaPlantasPorInstante(); // Increment the plant count
         } else {
             std::cout << "Erro: Sintaxe. Uso: planta <l><c> <tipo>" << std::endl;
         }

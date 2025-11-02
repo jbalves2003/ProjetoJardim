@@ -17,7 +17,7 @@ bool Jardim::criarJardim(int linhas, int colunas) {
         std::cout << "Erro: O jardim ja foi criado." << std::endl;
         return false;
     }
-    if (linhas <= 0 || colunas <= 0 || linhas > 26 || colunas > 26) {
+    if (linhas <= 0 || colunas <= 0 ||   linhas > 26 || colunas > 26) {
         std::cout << "Erro: Dimensoes do jardim invalidas (max 26x26)." << std::endl;
         return false;
     }
@@ -58,4 +58,16 @@ void Jardim::exibirJardim() const {
 
 bool Jardim::isJardimCriado() const {
     return jardimCriado;
+}
+
+void Jardim::resetaPlantasPorInstante() {
+    PlantasPorInstante = 0;
+}
+
+bool Jardim::podePlantar() const {
+    return PlantasPorInstante < 2;
+}
+
+void Jardim::incrementaPlantasPorInstante() {
+    ++PlantasPorInstante;
 }

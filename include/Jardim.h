@@ -16,6 +16,7 @@ class Jardim {
 private:
     int numLinhas;
     int numColunas;
+    int PlantasPorInstante;
     PosicaoSolo** solo;
 
     bool jardimCriado;
@@ -28,6 +29,10 @@ public:
     void exibirJardim() const;
 
     bool isJardimCriado() const;
+
+    void resetaPlantasPorInstante();
+    bool podePlantar() const;
+    void incrementaPlantasPorInstante();
 };
 
 #endif
