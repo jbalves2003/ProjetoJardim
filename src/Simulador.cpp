@@ -47,7 +47,7 @@ void Simulador::processarLinhaComando(const std::string& linha) {
                 jardim.exibirJardim();
             }
         } else {
-            std::cout << "Erro: Sintaxe. Uso: jardim <linhas> <colunas>" << std::endl;
+            std::cout << "Erro: jardim <linhas> <colunas>" << std::endl;
         }
         return;
     }
@@ -56,16 +56,16 @@ void Simulador::processarLinhaComando(const std::string& linha) {
         std::string nomeFicheiro;
         iss >> nomeFicheiro;
         if (!nomeFicheiro.empty()) {
-             std::cout << "Comando 'executa' validado para o ficheiro '" << nomeFicheiro << "'." << std::endl;
+             std::cout << "Comando 'executa' validado  '" << nomeFicheiro << "'." << std::endl;
         } else {
-            std::cout << "Erro: Sintaxe. Uso: executa <nome-ficheiro>" << std::endl;
+            std::cout << "Erro: Sintaxe. Uso: executa nome-ficheiro" << std::endl;
         }
         return;
     }
 
     // todos os comandos a partir da cricao do jardim
     if (!jardim.isJardimCriado()) {
-        std::cout << "Erro: O jardim ainda nao foi criado. Execute o comando 'jardim' primeiro." << std::endl;
+        std::cout << "Erro: O jardim ainda nao foi criado. Execute o comando jardim primeiro." << std::endl;
         return;
     }
 
