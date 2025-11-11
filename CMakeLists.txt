@@ -12,4 +12,5 @@ add_executable(Projeto main.cpp
         src/Planta.cpp
         src/Ferramenta.cpp
         include/Simulador.h
-        src/Simulador.cpp)
+        src/Simulador.cpp
+        include/Ferramenta.h)
