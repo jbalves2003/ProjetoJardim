@@ -1,0 +1,53 @@
+# =======================================
+#   GITIGNORE para CLion + C++ + MinGW
+# =======================================
+
+# 🔧 Pastas de build geradas pelo CLion/CMake
+cmake-build-debug/
+cmake-build-release/
+build/
+out/
+bin/
+obj/
+
+# 🧠 Ficheiros temporários do CLion / IntelliJ
+.idea/
+*.iml
+*.iws
+
+# 🧹 CMake temporários
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+
+# ⚙️ Ficheiros de compilação intermediários
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.lib
+*.mod
+*.smod
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.app
+
+# 🧾 Logs e ficheiros temporários
+*.log
+*.tmp
+*.temp
+
+# 📦 Outros ficheiros automáticos
+*.user
+*.DS_Store
+Thumbs.db
+
+# 🧪 Testes e relatórios (se aplicável)
+Testing/
+test_results/
