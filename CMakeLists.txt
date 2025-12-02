@@ -13,4 +13,18 @@ add_executable(Projeto main.cpp
         src/Ferramenta.cpp
         include/Simulador.h
         src/Simulador.cpp
-        include/Ferramenta.h)
+        include/Ferramenta.h
+        include/cato.h
+        src/Cato.cpp
+        src/Roseira.cpp
+        include/ErvaDaninha.h
+        src/Regador.cpp
+        include/FerramentaZ.h
+        include/PacoteAdubo.h
+        include/PlantaExotica.h
+        include/TesouraPoda.h
+        src/ErvaDaninha.cpp
+        src/PacoteAdubo.cpp
+        src/PlantaExotica.cpp
+        src/TesouraPoda.cpp
+        src/FerramentaZ.cpp)
