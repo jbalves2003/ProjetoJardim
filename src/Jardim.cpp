@@ -1,5 +1,7 @@
 #include "../include/Jardim.h"
 #include <iostream>
+#include "../include/Planta.h"
+#include "../include/Ferramenta.h"
 
 Jardim::Jardim() : numLinhas(0), numColunas(0), solo(nullptr), jardimCriado(false) {}
 
@@ -17,7 +19,7 @@ bool Jardim::criarJardim(int linhas, int colunas) {
         std::cout << "Erro: O jardim ja foi criado." << std::endl;
         return false;
     }
-    if (linhas <= 0 || colunas <= 0 ||   linhas > 26 || colunas > 26) {
+    if (linhas <= 0 || colunas <= 0 || linhas > 26 || colunas > 26) {
         std::cout << "Erro: Dimensoes do jardim invalidas (max 26x26)." << std::endl;
         return false;
     }
@@ -42,15 +44,25 @@ void Jardim::exibirJardim() const {
     }
 
     std::cout << "  ";
-    for (int j = 0; j < numColunas; ++j) {
-        std::cout << (char)('A' + j);
+    for (int c = 0; c < numColunas; ++c) {
+        std::cout << (char)('A' + c);
     }
     std::cout << std::endl;
 
-    for (int i = 0; i < numLinhas; ++i) {
-        std::cout << (char)('A' + i) << " ";
-        for (int j = 0; j < numColunas; ++j) {
-            std::cout << ' ';
+    for (int l = 0; l < numLinhas; ++l) {
+        // Imprimir régua lateral (letras das linhas)
+        std::cout << (char)('A' + l) << " ";
+
+        for (int c = 0; c < numColunas; ++c) {
+            PosicaoSolo& p = solo[l][c];
+
+            if (p.getPlanta() != nullptr) {
+                std::cout << p.getPlanta()->getCharRepresentacao();
+            } else if (p.getFerramenta() != nullptr) {
+                std::cout << p.getFerramenta()->getCharRepresentacao();
+            } else {
+                std::cout << " ";
+            }
         }
         std::cout << std::endl;
     }
@@ -60,14 +72,10 @@ bool Jardim::isJardimCriado() const {
     return jardimCriado;
 }
 
-void Jardim::resetaPlantasPorInstante() {
-    PlantasPorInstante = 0;
-}
-
-bool Jardim::podePlantar() const {
-    return PlantasPorInstante < 2;
-}
-
-void Jardim::incrementaPlantasPorInstante() {
-    ++PlantasPorInstante;
+PosicaoSolo* Jardim::getPosicao(int linha, int coluna) {
+    if (!jardimCriado) return nullptr;
+    if (linha < 0 || linha >= numLinhas || coluna < 0 || coluna >= numColunas) {
+        return nullptr;
+    }
+    return &solo[linha][coluna];
 }

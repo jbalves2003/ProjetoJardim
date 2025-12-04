@@ -5,7 +5,6 @@
 #ifndef JARDIM_H
 #define JARDIM_H
 
-#include <vector>
 #include "PosicaoSolo.h"
 
 class Jardineiro;
@@ -16,7 +15,6 @@ class Jardim {
 private:
     int numLinhas;
     int numColunas;
-    int PlantasPorInstante;
     PosicaoSolo** solo;
 
     bool jardimCriado;
@@ -30,9 +28,8 @@ public:
 
     bool isJardimCriado() const;
 
-    void resetaPlantasPorInstante();
-    bool podePlantar() const;
-    void incrementaPlantasPorInstante();
+
+    PosicaoSolo* getPosicao(int linha, int coluna);
 };
 
-#endif
+#endif //JARDIM_H

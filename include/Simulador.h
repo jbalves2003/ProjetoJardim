@@ -6,9 +6,11 @@
 
 #ifndef SIMULADOR_H
 #define SIMULADOR_H
+
+#include "Jardim.h"
+#include "Jardineiro.h"
 #include <string>
-#include "../include/Simulador.h"
-#include "../include/Jardim.h"
+
 class Simulador {
 public:
     Simulador();
@@ -16,8 +18,10 @@ public:
 
 private:
     Jardim jardim;
+    Jardineiro jardineiro;
     bool aExecutar;
+
     void processarLinhaComando(const std::string& linha);
 };
 
-#endif
+#endif //SIMULADOR_H

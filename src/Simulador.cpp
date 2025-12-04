@@ -7,11 +7,24 @@
 #include <iostream>
 
 
+#include "../include/Simulador.h"
+#include "../include/Cato.h"
+#include "../include/Roseira.h"
+#include "../include/ErvaDaninha.h"
+#include "../include/PlantaExotica.h"
+#include "../include/Regador.h"
+#include "../include/PacoteAdubo.h"
+#include "../include/TesouraPoda.h"
+#include "../include/FerramentaZ.h"
+
+#include <sstream>
+#include <iostream>
+
 Simulador::Simulador() : aExecutar(true) {}
 
 void Simulador::run() {
-    std::cout << "Simulador de Jardim!" << std::endl;
-    std::cout << "jardim: jardim <linhas> <colunas>" << std::endl;
+    std::cout << "Bem-vindo ao Simulador de Jardim!" << std::endl;
+    std::cout << "Para comecar, crie um jardim: jardim <linhas> <colunas>" << std::endl;
 
     std::string linhaComando;
     while (aExecutar) {
@@ -52,77 +65,159 @@ void Simulador::processarLinhaComando(const std::string& linha) {
     }
 
     if (comando == "executa") {
-        std::string nomeFicheiro;
-        iss >> nomeFicheiro;
-        if (!nomeFicheiro.empty()) {
-             std::cout << "Comando 'executa' validado para o ficheiro '" << nomeFicheiro << "'." << std::endl;
-        } else {
-            std::cout << "Erro: Sintaxe. Uso: executa <nome-ficheiro>" << std::endl;
-        }
+        // Implementar leitura de ficheiro depois
+        std::cout << "Comando executa ainda nao implementado." << std::endl;
         return;
     }
 
-    // todos os comandos a partir da cricao do jardim
     if (!jardim.isJardimCriado()) {
         std::cout << "Erro: O jardim ainda nao foi criado. Execute o comando 'jardim' primeiro." << std::endl;
         return;
     }
 
+    // --- COMANDOS DO JOGO ---
 
     if (comando == "avanca") {
         int n = 1;
         iss >> n;
         if (n > 0) {
-            std::cout << "Comando 'avanca' validado para " << n << " instante(s)." << std::endl;
-            jardim.resetaPlantasPorInstante();
+            std::cout << "Comando 'avanca' validado para " << n << " instante(s). (Logica de tempo na prox fase)" << std::endl;
+            // Aqui chamarás o motor de tempo
+            jardineiro.resetarAcoes(); // Por agora só resetamos as ações
         } else {
             std::cout << "Erro: O numero de instantes deve ser positivo." << std::endl;
         }
-    } else if (comando == "lplantas" || comando == "larea" || comando == "lferr" || comando == "larga" || comando == "sai") {
-        std::cout << "Comando '" << comando << "' validado." << std::endl;
-    } else if (comando == "e" || comando == "d" || comando == "c" || comando == "b") {
-        std::cout << "Comando de movimento '" << comando << "' validado." << std::endl;
-    } else if (comando == "lplanta" || comando == "lsolo" || comando == "colhe" || comando == "entra") {
-        std::string coords;
-        if (iss >> coords && coords.length() == 2) {
-             std::cout << "Comando '" << comando << "' validado para a posicao " << coords << "." << std::endl;
-        } else {
-            std::cout << "Erro: Sintaxe. Uso: " << comando << " <l><c>" << std::endl;
-        }
-    } else if (comando == "planta") {
-        if (!jardim.podePlantar()) {
-            std::cout << "Erro: Nao e permitido plantar mais de 2 plantas no mesmo instante." << std::endl;
-            return;
-        }
 
+    } else if (comando == "planta") {
         std::string coords, tipoStr;
         if (iss >> coords >> tipoStr && coords.length() == 2 && tipoStr.length() == 1) {
-            std::cout << "Comando 'planta' validado para " << coords << " com tipo '" << tipoStr[0] << "'." << std::endl;
-            jardim.incrementaPlantasPorInstante(); // Increment the plant count
+            // Converter coordenadas
+            int l = (coords[0] >= 'a') ? coords[0] - 'a' : coords[0] - 'A';
+            int c = (coords[1] >= 'a') ? coords[1] - 'a' : coords[1] - 'A';
+
+            // Verificar limite de ações
+            if (!jardineiro.gastarPlantacao()) {
+                std::cout << "O jardineiro nao pode plantar mais neste turno." << std::endl;
+                return;
+            }
+
+            PosicaoSolo* pSolo = jardim.getPosicao(l, c);
+            if (pSolo == nullptr) {
+                std::cout << "Posicao invalida." << std::endl;
+                return;
+            }
+            if (pSolo->getPlanta() != nullptr) {
+                std::cout << "Ja existe uma planta nessa posicao." << std::endl;
+                return;
+            }
+
+            // Criar a planta
+            Planta* novaPlanta = nullptr;
+            char tipo = tipoStr[0];
+            if (tipo == 'c') novaPlanta = new Cato();
+            else if (tipo == 'r') novaPlanta = new Roseira();
+            else if (tipo == 'e') novaPlanta = new ErvaDaninha();
+            else if (tipo == 'x') novaPlanta = new PlantaExotica();
+            else {
+                std::cout << "Tipo de planta desconhecido (c, r, e, x)." << std::endl;
+                return;
+            }
+
+            pSolo->setPlanta(novaPlanta);
+            std::cout << "Planta colocada com sucesso." << std::endl;
+            jardim.exibirJardim();
+
         } else {
             std::cout << "Erro: Sintaxe. Uso: planta <l><c> <tipo>" << std::endl;
         }
+
+    } else if (comando == "colhe") {
+        std::string coords;
+        if (iss >> coords && coords.length() == 2) {
+            int l = (coords[0] >= 'a') ? coords[0] - 'a' : coords[0] - 'A';
+            int c = (coords[1] >= 'a') ? coords[1] - 'a' : coords[1] - 'A';
+
+            if (!jardineiro.gastarColheita()) {
+                std::cout << "O jardineiro nao pode colher mais neste turno." << std::endl;
+                return;
+            }
+
+            PosicaoSolo* pSolo = jardim.getPosicao(l, c);
+            if (pSolo && pSolo->getPlanta() != nullptr) {
+                delete pSolo->getPlanta(); // Apaga o objeto da memória
+                pSolo->setPlanta(nullptr); // Limpa o ponteiro no solo
+                std::cout << "Planta colhida." << std::endl;
+                jardim.exibirJardim();
+            } else {
+                std::cout << "Nao ha planta para colher ai." << std::endl;
+            }
+        } else {
+            std::cout << "Erro: Sintaxe. Uso: colhe <l><c>" << std::endl;
+        }
+
     } else if (comando == "compra") {
         std::string tipoStr;
         if (iss >> tipoStr && tipoStr.length() == 1) {
-             std::cout << "Comando 'compra' validado para o tipo '" << tipoStr[0] << "'." << std::endl;
+            char tipo = tipoStr[0];
+            Ferramenta* novaF = nullptr;
+
+            if (tipo == 'g') novaF = new Regador();
+            else if (tipo == 'a') novaF = new PacoteAdubo();
+            else if (tipo == 't') novaF = new TesouraPoda();
+            else if (tipo == 'z') novaF = new FerramentaZ();
+            else {
+                std::cout << "Ferramenta desconhecida (g, a, t, z)." << std::endl;
+                return;
+            }
+
+            if (jardineiro.comprarFerramenta(novaF)) {
+                std::cout << "Ferramenta comprada! ID: " << novaF->getNumeroSerie() << std::endl;
+            } else {
+                delete novaF;
+                std::cout << "Erro ao comprar ferramenta." << std::endl;
+            }
         } else {
             std::cout << "Erro: Sintaxe. Uso: compra <tipo>" << std::endl;
         }
+
     } else if (comando == "pega") {
-        int numSerie;
-        if (iss >> numSerie) {
-            std::cout << "Comando 'pega' validado para a ferramenta " << numSerie << "." << std::endl;
+        int id;
+        if (iss >> id) {
+            if (jardineiro.pegarFerramenta(id)) {
+                std::cout << "Ferramenta " << id << " equipada na mao." << std::endl;
+            } else {
+                std::cout << "Ferramenta " << id << " nao encontrada no inventario." << std::endl;
+            }
         } else {
-             std::cout << "Erro: Sintaxe. Uso: pega <numero_serie>" << std::endl;
+            std::cout << "Erro: Sintaxe. Uso: pega <id>" << std::endl;
         }
-    } else if (comando == "grava" || comando == "recupera" || comando == "apaga") {
-        std::string nome;
-        if (iss >> nome) {
-            std::cout << "Comando '" << comando << "' validado com o nome '" << nome << "'." << std::endl;
+
+    } else if (comando == "larga") {
+        jardineiro.largarFerramenta();
+        std::cout << "Ferramenta largada para o inventario." << std::endl;
+
+    } else if (comando == "lferr") {
+        std::cout << "--- Inventario ---" << std::endl;
+        // Listar ferramenta na mão
+        Ferramenta* mao = jardineiro.getFerramentaNaMao();
+        if (mao) {
+            std::cout << "MAO: " << mao->getCharRepresentacao() << " (ID: " << mao->getNumeroSerie() << ")" << std::endl;
         } else {
-            std::cout << "Erro: Sintaxe. Uso: " << comando << " <nome>" << std::endl;
+            std::cout << "MAO: Vazia" << std::endl;
         }
+        // Listar mochila
+        for (Ferramenta* f : jardineiro.getInventario()) {
+            std::cout << "MOCHILA: " << f->getCharRepresentacao() << " (ID: " << f->getNumeroSerie() << ")" << std::endl;
+        }
+
+    } else if (comando == "lplantas" || comando == "larea" || comando == "lplanta" || comando == "lsolo") {
+        // Implementar listagens detalhadas depois
+        std::cout << "Comando de listagem validado (logica completa em breve)." << std::endl;
+
+    } else if (comando == "e" || comando == "d" || comando == "c" || comando == "b" || comando == "entra" || comando == "sai") {
+        // Implementar movimento depois
+        std::cout << "Comando de movimento validado (logica completa em breve)." << std::endl;
+
     } else {
         std::cout << "Comando desconhecido: '" << comando << "'" << std::endl;
     }

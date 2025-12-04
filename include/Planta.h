@@ -4,7 +4,6 @@
 #include "Settings.h"
 #include <string>
 
-// Forward declaration para evitar dependências circulares
 class PosicaoSolo;
 
 class Planta {
@@ -13,7 +12,6 @@ protected:
     char charRepresentacao;
     std::string especie;
 
-    // Atributos vitais
     int aguaInterna;
     int nutrientesInternos;
     int idade;
