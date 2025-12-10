@@ -10,11 +10,9 @@ private:
     int posLinha, posColuna;
     bool noJardim;
 
-    // Inventário e Mão
     std::vector<Ferramenta*> inventario;
     Ferramenta* ferramentaNaMao;
 
-    // Contadores de ações por turno
     int movimentosRestantes;
     int plantacoesRestantes;
     int colheitasRestantes;
@@ -24,7 +22,6 @@ public:
     Jardineiro();
     ~Jardineiro();
 
-    // Getters e Setters
     int getLinha() const;
     int getColuna() const;
     bool estaNoJardim() const;
@@ -32,21 +29,21 @@ public:
     void entrarJardim(int l, int c);
     void sairJardim();
 
-    // Gestão de Ferramentas
     bool apanharFerramenta(Ferramenta* f);
     bool comprarFerramenta(Ferramenta* f);
-    bool pegarFerramenta(int numeroSerie); // Mete na mão
-    void largarFerramenta(); // Tira da mão para o inventário
+    bool pegarFerramenta(int numeroSerie);
+    void largarFerramenta();
+
+    void removerFerramentaMao();
+
     Ferramenta* getFerramentaNaMao() const;
     const std::vector<Ferramenta*>& getInventario() const;
 
-    // Gestão de Ações
     bool gastarMovimento();
     bool gastarPlantacao();
     bool gastarColheita();
     bool gastarEntradaSaida();
 
-    // Chamado pelo comando 'avanca' para repor os limites
     void resetarAcoes();
 };
 

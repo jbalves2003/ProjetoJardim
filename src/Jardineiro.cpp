@@ -35,12 +35,9 @@ void Jardineiro::entrarJardim(int l, int c) {
 
 void Jardineiro::sairJardim() {
     noJardim = false;
-    // Posição indefinida quando sai
-    posLinha = -1; 
+    posLinha = -1;
     posColuna = -1;
 }
-
-// --- Gestão de Ferramentas ---
 
 bool Jardineiro::apanharFerramenta(Ferramenta* f) {
     if (f == nullptr) return false;
@@ -65,7 +62,7 @@ bool Jardineiro::pegarFerramenta(int numeroSerie) {
             return true;
         }
     }
-    return false; // Não encontrou
+    return false;
 }
 
 void Jardineiro::largarFerramenta() {
@@ -75,6 +72,11 @@ void Jardineiro::largarFerramenta() {
     }
 }
 
+void Jardineiro::removerFerramentaMao() {
+
+    ferramentaNaMao = nullptr;
+}
+
 Ferramenta* Jardineiro::getFerramentaNaMao() const {
     return ferramentaNaMao;
 }
@@ -82,8 +84,6 @@ Ferramenta* Jardineiro::getFerramentaNaMao() const {
 const std::vector<Ferramenta*>& Jardineiro::getInventario() const {
     return inventario;
 }
-
-// --- Gestão de Ações ---
 
 void Jardineiro::resetarAcoes() {
     movimentosRestantes = Settings::Jardineiro::max_movimentos;

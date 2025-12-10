@@ -24,12 +24,15 @@ public:
     ~Jardim();
 
     bool criarJardim(int linhas, int colunas);
-    void exibirJardim() const;
+
+    void exibirJardim(int linhaJardineiro = -1, int colunaJardineiro = -1) const;
 
     bool isJardimCriado() const;
 
-
     PosicaoSolo* getPosicao(int linha, int coluna);
+
+    int getNumLinhas() const { return numLinhas; }
+    int getNumColunas() const { return numColunas; }
 };
 
 #endif //JARDIM_H

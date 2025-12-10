@@ -37,12 +37,13 @@ bool Jardim::criarJardim(int linhas, int colunas) {
     return true;
 }
 
-void Jardim::exibirJardim() const {
+void Jardim::exibirJardim(int linhaJardineiro, int colunaJardineiro) const {
     if (!jardimCriado) {
         std::cout << "O jardim ainda nao foi criado." << std::endl;
         return;
     }
 
+    // Régua superior
     std::cout << "  ";
     for (int c = 0; c < numColunas; ++c) {
         std::cout << (char)('A' + c);
@@ -50,12 +51,18 @@ void Jardim::exibirJardim() const {
     std::cout << std::endl;
 
     for (int l = 0; l < numLinhas; ++l) {
-        // Imprimir régua lateral (letras das linhas)
+        // Régua lateral
         std::cout << (char)('A' + l) << " ";
 
         for (int c = 0; c < numColunas; ++c) {
-            PosicaoSolo& p = solo[l][c];
+            // 1. Prioridade Máxima: O Jardineiro (*)
+            if (l == linhaJardineiro && c == colunaJardineiro) {
+                std::cout << "*";
+                continue; // Já desenhámos, passa para a próxima coluna
+            }
 
+            // 2. Planta -> Ferramenta -> Vazio
+            PosicaoSolo& p = solo[l][c];
             if (p.getPlanta() != nullptr) {
                 std::cout << p.getPlanta()->getCharRepresentacao();
             } else if (p.getFerramenta() != nullptr) {
