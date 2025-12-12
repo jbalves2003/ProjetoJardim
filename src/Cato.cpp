@@ -14,7 +14,7 @@ Cato::Cato() : Planta('c', "Cato"), contagemAguaExcessiva(0), contagemSemNutrien
 void Cato::viver(PosicaoSolo& solo) {
     idade++;
 
-    // REGRA: Absorve 25% da água do solo
+    //  Absorve 25% da água do solo
     int aguaNoSolo = solo.getAgua();
     int aguaAbsorvida = aguaNoSolo * Settings::Cacto::absorcao_agua_percentagem / 100;
     solo.diminuirAgua(aguaAbsorvida);
@@ -36,7 +36,7 @@ void Cato::viver(PosicaoSolo& solo) {
     }
 
     // Se nutrientes no solo == 0
-    if (solo.getNutrientes() == 0) { // Ou < 1
+    if (solo.getNutrientes() == 0) {
         contagemSemNutrientes++;
     } else {
         contagemSemNutrientes = 0;

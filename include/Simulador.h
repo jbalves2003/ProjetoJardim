@@ -2,7 +2,6 @@
 // Created by 2003j on 13/10/2025.
 //
 
-// Ficheiro: Simulador.h
 
 #ifndef SIMULADOR_H
 #define SIMULADOR_H

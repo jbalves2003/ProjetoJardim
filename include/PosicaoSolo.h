@@ -22,7 +22,6 @@ public:
     void setPlanta(Planta* p);
     void setFerramenta(Ferramenta* f);
 
-    // --- NOVOS SETTERS PARA O LOAD ---
     void setAgua(int a);
     void setNutrientes(int n);
 

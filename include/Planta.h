@@ -34,7 +34,6 @@ public:
     virtual bool querReproduzir() const = 0;
     virtual Planta* reproduzir() = 0;
 
-    // Virtual opcional
     virtual std::string getBeleza() const { return "neutra"; }
 };
 

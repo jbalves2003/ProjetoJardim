@@ -15,7 +15,7 @@ public:
     ~Jardim();
 
     bool criarJardim(int linhas, int colunas);
-    void limparJardim(); // --- NOVO: Para apagar antes de carregar ---
+    void limparJardim();
     
     void exibirJardim(int linhaJardineiro = -1, int colunaJardineiro = -1) const;
     bool isJardimCriado() const;

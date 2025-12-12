@@ -30,7 +30,7 @@ bool ErvaDaninha::deveMorrer() const {
 }
 
 bool ErvaDaninha::querReproduzir() const {
-    // Regra: Nutrientes > 30 E passaram 5 instantes desde a última vez
+    //  Nutrientes > 30 E passaram 5 instantes desde a última vez
     if (nutrientesInternos > Settings::ErvaDaninha::multiplica_nutrientes_maior &&
         contadorReproducao >= Settings::ErvaDaninha::multiplica_instantes) {
         return true;

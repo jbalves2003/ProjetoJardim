@@ -3,12 +3,12 @@
 
 #include "Settings.h"
 
-class PosicaoSolo; // Forward declaration
+class PosicaoSolo;
 
 class Ferramenta {
 protected:
     int numeroSerie;
-    int durabilidade; // -1 para infinito
+    int durabilidade;
     char charRepresentacao;
 
 public:
@@ -19,11 +19,10 @@ public:
     int getNumeroSerie() const;
     int getDurabilidade() const;
 
-    // Ação principal: Usar a ferramenta numa posição
-    // Retorna true se a ferramenta foi usada com sucesso
+
     virtual bool usar(PosicaoSolo& solo) = 0;
 
-    // Verifica se a ferramenta se partiu/gastou
+    // Verifica se a ferramenta se partiu
     virtual bool quebrou() const;
 };
 

@@ -24,7 +24,6 @@ Ferramenta* PosicaoSolo::getFerramenta() const { return ferramenta; }
 void PosicaoSolo::setPlanta(Planta* p) { this->planta = p; }
 void PosicaoSolo::setFerramenta(Ferramenta* f) { this->ferramenta = f; }
 
-// --- IMPLEMENTAÇÃO ---
 void PosicaoSolo::setAgua(int a) { this->agua = a; }
 void PosicaoSolo::setNutrientes(int n) { this->nutrientes = n; }
 

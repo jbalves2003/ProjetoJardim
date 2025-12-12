@@ -9,7 +9,7 @@
 
 class ErvaDaninha : public Planta {
 private:
-    int contadorReproducao; // Para contar os 5 instantes
+    int contadorReproducao;
 
 public:
     ErvaDaninha();

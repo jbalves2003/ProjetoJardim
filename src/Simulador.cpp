@@ -53,7 +53,7 @@ void Simulador::processarLinhaComando(const std::string& linha) {
         return;
     }
 
-    // --- EXECUTA (Ler ficheiros) ---
+    // Ler Ficheiro
     if (comando == "executa") {
         std::string nome;
         if (iss >> nome) {
@@ -73,18 +73,18 @@ void Simulador::processarLinhaComando(const std::string& linha) {
         return;
     }
 
-    // --- GRAVA (Salvar estado) ---
+    // --- GRAVA estado
     if (comando == "grava") {
         if (!jardim.isJardimCriado()) { std::cout << "Nada para gravar." << std::endl; return; }
         std::string nome;
         if (iss >> nome) {
             std::ofstream f(nome);
             if (f.is_open()) {
-                // 1. Dimensoes
+                //  Dimensoes
                 f << jardim.getNumLinhas() << " " << jardim.getNumColunas() << std::endl;
-                // 2. Jardineiro
+                //  Jardineiro
                 f << jardineiro.getLinha() << " " << jardineiro.getColuna() << std::endl;
-                // 3. Inventario
+                //  Inventario
                 f << jardineiro.getInventario().size() << std::endl;
                 for(auto* ferr : jardineiro.getInventario())
                     f << ferr->getCharRepresentacao() << " " << ferr->getNumeroSerie() << " " << ferr->getDurabilidade() << std::endl;
@@ -114,18 +114,15 @@ void Simulador::processarLinhaComando(const std::string& linha) {
         return;
     }
 
-    // --- RECUPERA (Carregar estado) ---
+    // recupera estado
     if (comando == "recupera") {
         std::string nome;
         if (iss >> nome) {
             std::ifstream f(nome);
             if (f.is_open()) {
                 jardim.limparJardim();
-                jardineiro.resetarAcoes(); // Simplificação: reseta acoes e inventario manual
+                jardineiro.resetarAcoes();
                 while(!jardineiro.getInventario().empty()) {
-                    // Limpar inventario atual (loop basico, idealmente ter metodo limpar no jardineiro)
-                    // Como nao temos getter nao-const do vetor, nao conseguimos apagar aqui facilmente sem mexer no Jardineiro.cpp
-                    // Vamos ignorar o leak aqui para manter simples ou terias de adicionar limparInventario() no Jardineiro.
                     break;
                 }
                 jardineiro.removerFerramentaMao();
