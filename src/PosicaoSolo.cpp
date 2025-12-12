@@ -1,10 +1,11 @@
 #include "../include/PosicaoSolo.h"
-#include "../include/Planta.h"     // Necessário para delete
-#include "../include/Ferramenta.h" // Necessário para delete
-#include <algorithm> // Para std::max
+#include "../include/Planta.h"
+#include "../include/Ferramenta.h"
+#include "../include/Settings.h"
+#include <random>
+#include <chrono>
 
 PosicaoSolo::PosicaoSolo() {
-    // ... (o teu código do construtor com o random mantém-se igual aqui) ...
     static std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<int> distAgua(Settings::Jardim::agua_min, Settings::Jardim::agua_max);
     std::uniform_int_distribution<int> distNutrientes(Settings::Jardim::nutrientes_min, Settings::Jardim::nutrientes_max);
@@ -23,22 +24,11 @@ Ferramenta* PosicaoSolo::getFerramenta() const { return ferramenta; }
 void PosicaoSolo::setPlanta(Planta* p) { this->planta = p; }
 void PosicaoSolo::setFerramenta(Ferramenta* f) { this->ferramenta = f; }
 
-void PosicaoSolo::aumentarAgua(int qtd) {
-    this->agua += qtd;
-    // O enunciado não define limite máximo explícito para o solo,
-    // mas podes limitar se quiseres. Por agora deixamos livre.
-}
+// --- IMPLEMENTAÇÃO ---
+void PosicaoSolo::setAgua(int a) { this->agua = a; }
+void PosicaoSolo::setNutrientes(int n) { this->nutrientes = n; }
 
-void PosicaoSolo::diminuirAgua(int qtd) {
-    this->agua -= qtd;
-    if (this->agua < 0) this->agua = 0; // Não pode haver água negativa
-}
-
-void PosicaoSolo::aumentarNutrientes(int qtd) {
-    this->nutrientes += qtd;
-}
-
-void PosicaoSolo::diminuirNutrientes(int qtd) {
-    this->nutrientes -= qtd;
-    if (this->nutrientes < 0) this->nutrientes = 0;
-}
+void PosicaoSolo::aumentarAgua(int qtd) { this->agua += qtd; }
+void PosicaoSolo::diminuirAgua(int qtd) { this->agua -= qtd; if (this->agua < 0) this->agua = 0; }
+void PosicaoSolo::aumentarNutrientes(int qtd) { this->nutrientes += qtd; }
+void PosicaoSolo::diminuirNutrientes(int qtd) { this->nutrientes -= qtd; if (this->nutrientes < 0) this->nutrientes = 0; }

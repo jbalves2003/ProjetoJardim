@@ -14,3 +14,5 @@ std::string Planta::getEspecie() const { return especie; }
 int Planta::getAgua() const { return aguaInterna; }
 int Planta::getNutrientes() const { return nutrientesInternos; }
 int Planta::getId() const { return id; }
+
+int Planta::getIdade() const { return idade; }

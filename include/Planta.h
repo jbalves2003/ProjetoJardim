@@ -19,7 +19,6 @@ protected:
 public:
     Planta(char representacao, std::string especie);
     virtual ~Planta() = default;
-    virtual std::string getBeleza() const { return "neutra"; }
 
     char getCharRepresentacao() const;
     std::string getEspecie() const;
@@ -27,15 +26,17 @@ public:
     int getNutrientes() const;
     int getId() const;
 
+    // --- NOVO MÉTODO NECESSÁRIO ---
+    int getIdade() const;
+
+    // Métodos virtuais puros
     virtual void viver(PosicaoSolo& solo) = 0;
-
-    // Verifica se a planta morre ou nao
     virtual bool deveMorrer() const = 0;
-
-    // Verifica se a planta se quer reproduzir
     virtual bool querReproduzir() const = 0;
-
     virtual Planta* reproduzir() = 0;
+
+    // Virtual opcional
+    virtual std::string getBeleza() const { return "neutra"; }
 };
 
 #endif

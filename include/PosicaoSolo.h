@@ -1,11 +1,6 @@
 #ifndef PROJETO_POSICAOSOLO_H
 #define PROJETO_POSICAOSOLO_H
 
-#include "Settings.h"
-#include <random>
-#include <chrono>
-
-// Forward declarations
 class Planta;
 class Ferramenta;
 
@@ -19,17 +14,18 @@ private:
 public:
     PosicaoSolo();
 
-    // Getters
     int getAgua() const;
     int getNutrientes() const;
     Planta* getPlanta() const;
     Ferramenta* getFerramenta() const;
 
-    // Setters e Modificadores
     void setPlanta(Planta* p);
     void setFerramenta(Ferramenta* f);
 
-    // Métodos para as plantas/ferramentas usarem
+    // --- NOVOS SETTERS PARA O LOAD ---
+    void setAgua(int a);
+    void setNutrientes(int n);
+
     void aumentarAgua(int qtd);
     void diminuirAgua(int qtd);
     void aumentarNutrientes(int qtd);
