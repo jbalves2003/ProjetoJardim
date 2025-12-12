@@ -9,7 +9,6 @@ Jardim::~Jardim() {
     limparJardim();
 }
 
-// --- NOVO MÉTODO ---
 void Jardim::limparJardim() {
     if (solo != nullptr) {
         for (int i = 0; i < numLinhas; ++i) {

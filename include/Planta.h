@@ -26,7 +26,6 @@ public:
     int getNutrientes() const;
     int getId() const;
 
-    // --- NOVO MÉTODO NECESSÁRIO ---
     int getIdade() const;
 
     // Métodos virtuais puros
